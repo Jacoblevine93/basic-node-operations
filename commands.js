@@ -1,0 +1,61 @@
+const fs = require('fs');
+
+function done(output) {
+	process.stdout.write(output);
+	process.stdout.write('\nprompt > ');
+}
+
+function evaluateCmd(userInput) {
+	const userInputArray =userInput.split(" ");
+	const command = userInputArray[0];
+
+	switch (command) {
+		case "echo":
+			commandLibrary.echo(userInputArray.slice(1).join(' '));
+			break;
+		case "cat":
+			commandLibrary.cat(userInputArray.slice(1));
+			break;
+		case "head":
+			commandLibrary.head(userInputArray.slice(1));
+			break;
+	//	case "tail":
+	//		commandLibrary.head(userInputArray.slice(1));
+	//		break;
+	}	
+}
+
+const commandLibrary = {
+	"echo": (userInput) => {
+		done(userInput)
+	},
+  	"cat": function(fullPath) {
+       const fileName = fullPath[0];
+       fs.readFile(fileName, (err, data) => {
+           if (err) throw err;
+           done(data);
+       });
+   	},
+  	"head": function(fullPath) {
+   		const fileName = fullPath[0];
+   		var lines;
+   		fs.readFile(fileName, (err,data) => {
+   			if (err) throw err;
+   			console.log(data.split('/\r?\n/'));
+   			done(lines)
+   		});
+   },
+   "tail": function(fullPath) {
+    	const fileName = fullPath[0];
+   		var lines;
+   		fs.readFile(fileName, (err,data) => {
+   			if (err) throw err;
+   			console.log(data.split(/\r?\n/));
+   			done(lines)
+   		});  	
+
+   }
+};
+
+module.exports.commandLibrary = commandLibrary;
+module.exports.evaluateCmd = evaluateCmd;

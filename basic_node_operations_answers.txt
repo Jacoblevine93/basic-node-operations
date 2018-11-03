@@ -1,0 +1,21 @@
+Questions
+
+1. Run the commands sort, wc and uniq on the commands.js file. Explain how they work and what the output was.
+
+A: 
+
+- Sort: sorts the file alphabetically
+- Wc: reads file and returns line count, word count, and byte count
+- Uniq: returns unique lines
+
+2. Using the pipe (|) connect at least two commands and run it on commands.js. Explain what the output was and why the specific data was outputted.
+
+A: The output is the output of the second function with the output of the first function as the input. 
+
+6. Given a string, reverse the order of characters in each word within a sentence while maintaining the original word order and whitespace and return the string. To improve your problem-solving experience, use the suggested functions to solve the problem.
+
+A: 
+
+function reverseString(inputString) {
+	return inputString.split('').reverse().join('');
+}
