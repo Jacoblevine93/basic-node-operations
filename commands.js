@@ -19,9 +19,12 @@ function evaluateCmd(userInput) {
 		case "head":
 			commandLibrary.head(userInputArray.slice(1));
 			break;
-	//	case "tail":
-	//		commandLibrary.head(userInputArray.slice(1));
-	//		break;
+		case "tail":
+			commandLibrary.tail(userInputArray.slice(1));
+			break;
+		default:
+			commandLibrary.errorHandler(command);
+			break;
 	}	
 }
 
@@ -39,21 +42,24 @@ const commandLibrary = {
   	"head": function(fullPath) {
    		const fileName = fullPath[0];
    		var lines;
-   		fs.readFile(fileName, (err,data) => {
+   		fs.readFile(fileName, 'utf8', (err,data) => {
    			if (err) throw err;
-   			console.log(data.split('/\r?\n/'));
-   			done(lines)
+   			lines = data.split('\n').slice(0,3).join('\n');
+   			done(lines);
    		});
    },
    "tail": function(fullPath) {
     	const fileName = fullPath[0];
    		var lines;
-   		fs.readFile(fileName, (err,data) => {
+   		fs.readFile(fileName, 'utf8', (err,data) => {
    			if (err) throw err;
-   			console.log(data.split(/\r?\n/));
+   			lines = data.split('\n').slice(-3).join('\n');
    			done(lines)
    		});  	
-
+   },
+   "errorHandler": function(userInput) {
+   		var error = `${userInput} is not valid`;
+   		done(error);
    }
 };
 
